@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Mail01Icon,
   LockPasswordIcon,
   UserIcon,
   Contact02Icon
 } from "@hugeicons/core-free-icons";
+import registerImg from "../../assets/registerImg.jpeg";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -17,13 +21,14 @@ function Register() {
   const [confirmPassword, setconfirmPassword] = useState("")
   const [confirmShowPassword, setconfirmShowPassword] = useState(false);
   const [userCred,setUserCred] = useState(()=>{
-    return JSON.parse(localStorage.getItem('userCred')) || []
+    return JSON.parse(localStorage.getItem('User')) || []
   })
   useEffect(() => {
     localStorage.setItem("User", JSON.stringify(userCred))
   }, [userCred])
+ 
   const handleUserCred = (email,userName,userPass, confirmPass, contactNum) =>{
-    if(!email,!userName,!userPass,!confirmPass,!contactNum){
+    if(!email || !userName || !userPass || !confirmPass || !contactNum){
       alert("Fill all fields")
       return
     }
@@ -38,13 +43,14 @@ function Register() {
      setUserName("")
       return
     }
+
+   
   
   const newUser = {
     id: Date.now(),
     Email: email,
     userName:userName,
     pass: userPass,
-    confirmPass: confirmPass,
     userContactNum: contactNum
   }
 
@@ -55,10 +61,47 @@ function Register() {
   setPassword("")
   setconfirmPassword("")
   setContactNum("")
+  
+toast.success('Registered successfully!', {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "dark",
+  transition: Bounce,
+});
+
+
   }
   return (
     <>
-      <div className="flex justify-center items-center w-full min-h-screen bg-[#F7F7F5] p-4">
+      <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      transition={Bounce}
+    />
+
+      <div className="flex justify-center items-center w-full min-h-screen bg-[#F7F7F5] px-8">
+        <div className="flex items-center justify-center gap-8 max-w-6xl">
+          <div className="hidden md:block w-[55%]">
+            <img
+              src={registerImg}
+              alt="registerImg"
+              className="rounded-xl w-full h-full object-cover"
+            />
+          </div>
+          
         <div className="bg-[#1B3A6B] flex flex-col gap-2 w-full max-w-sm rounded-xl p-6 sm:p-10">
           <div>
             <h1 className="font-bold text-center sm:text-3xl text-2xl text-white">
@@ -124,7 +167,16 @@ function Register() {
               Register
             </button>
           </div>
+          <div className="flex justify-center mt-2">
+        <p className="font-semibold text-sm text-white">
+              Already have an account? {" "}
+            <Link to="/" className="hover:text-cyan-500">
+            Login here
+            </Link>
+        </p>
           </div>
+          </div>
+        </div>
         </div>
       </div>
     </>
