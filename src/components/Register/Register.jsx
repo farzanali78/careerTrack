@@ -49,7 +49,7 @@ function Register() {
       return;
     }
     if (userPass != confirmPass) {
-      toast.success("Password doesn't match!", {
+      toast.error("Password doesn't match!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
