@@ -3,6 +3,8 @@ import Typewriter from "typewriter-effect";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
+import { X } from "lucide-react";
 
 function Home() {
   const [isAdmin, setisAdmin] = useState(false);
@@ -87,7 +89,7 @@ function Home() {
 
   return (
     <>
-      <section className="w-full min-h-screen bg-[#F7F7F5] flex items-center justify-center px-6">
+      <section className="w-full min-h-screen overflow-x-hidden bg-[#F7F7F5] flex items-center justify-center px-6">
         <div className="max-w-6xl w-full flex flex-col items-center text-center gap-6">
           <h1 className="text-5xl font-bold text-white">
             <Typewriter
@@ -139,33 +141,61 @@ function Home() {
             </button>
           </div>
           {showform && (
-            <div className="flex flex-col gap-3 p-2">
-              <input
-                type="text"
-                placeholder="Company"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-              />
-
-              <input
-                type="text"
-                placeholder="Role"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-              />
-
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="flex justify-center items-center  p-3 rounded-xl"
+            >
+              
+             <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+              <div>
+                <div className="flex justify-end items-end">
+                <button
+                onClick={() => setShowForm(false)}
+                className="p-1 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
               >
-                <option value="pending">Pending</option>
-                <option value="accepted">Accepted</option>
-                <option value="rejected">Rejected</option>
-              </select>
-              <p>{user.userName}</p>
-              <button>save</button>
-              <button>cancel</button>
-            </div>
+                <X size={20} className="text-gray-500" />
+              </button>
+              </div>
+              </div>
+               <div className="flex max-w-md flex-col gap-3 p-2">
+                <input
+                  type="text"
+                  placeholder="Company"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  className="w-full border rounded-lg px-3 py-2"
+                />
+
+                <input
+                  type="text"
+                  placeholder="Role"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  className="w-full border rounded-lg px-3 py-2"
+                />
+
+                <select
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="pending">Pending</option>
+                  <option value="accepted">Accepted</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+                {/* <p>{user.userName}</p> */}
+                <div className="flex flex-row gap-2 mt-4">
+                  <button className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer">
+                    save
+                  </button>
+                  <button className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer">
+                    cancel
+                  </button>
+                </div>
+              </div>
+             </div>
+            </motion.div>
           )}
         </div>
       </section>
