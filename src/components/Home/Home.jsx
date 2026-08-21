@@ -3,32 +3,40 @@ import Typewriter from "typewriter-effect";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
 
 function Home() {
   const [isAdmin, setisAdmin] = useState(false);
   const [user, setUser] = useState({});
   const [showform, setShowForm] = useState(false);
-  // const [showUser, setShowUser] = useState(false);
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
-  const [status, setStatus] = useState("pending");
-
-  const storageKey = `applications_${user.userName}`;
-  const [application, setApplication] = useState(
-    () => [JSON.parse(localStorage.getItem("applications"))] || [],
-  );
+  const [status, setStatus] = useState("");
+  const [application, setApplication] = useState([]);
 
   useEffect(() => {
     const admin = JSON.parse(localStorage.getItem("adminCred"));
-    // console.log(admin[0].isAdmin)
     setisAdmin(admin[0].isAdmin);
   }, []);
 
-  const getUserData = () => {
-    setUser(JSON.parse(localStorage.getItem("loggedIn_User")) || []);
-  };
+  useEffect(() => {
+    const savedUser = JSON.parse(localStorage.getItem("loggedIn_User")) || {};
+    setUser(savedUser);
+  }, []);
+
+  useEffect(() => {
+    if (!user.userName) return;
+    const storageKey = `applications_${user.userName}`;
+    const data = JSON.parse(localStorage.getItem(storageKey)) || [];
+    setApplication(data);
+  }, [user.userName]);
+
+  useEffect(() => {
+    if (!user.userName) return;
+    const storageKey = `applications_${user.userName}`;
+    const data = JSON.parse(localStorage.getItem(storageKey)) || [];
+  }, [application, user.userName]);
 
   const handleClick = () => {
     if (isAdmin) {
@@ -38,39 +46,7 @@ function Home() {
     }
   };
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAdmin) {
-      toast.success("Welcome Back, Admin!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-    } else {
-      toast.success("Welcome Back", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-    }
-  }, [isAdmin]);
 
   const handleApplication = (Usercompany, Userrole, Jobstatus) => {
     const newApp = {
@@ -80,6 +56,25 @@ function Home() {
       status: Jobstatus,
     };
 
+    if (!Usercompany || !Userrole || !Jobstatus) {
+      toast.error("Fill all fields!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+      return;
+    }
+
+    setCompany("");
+    setRole("");
+    setStatus("pending");
+    toast.success("Job added!");
     setApplication((prev) => [...prev, newApp]);
   };
 
@@ -130,73 +125,80 @@ function Home() {
               onClick={handleClick}
               className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
             >
-              {isAdmin ? "View All Users" : "+ Add Application"}
+              {isAdmin ? "View All Users" : "+ Add Job"}
             </button>
 
             <button
               onClick={() => navigate("/application")}
               className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
             >
-              {isAdmin ? "Manage Users" : "View Application"}
+              {isAdmin ? "Manage Users" : "View My Jobs"}
             </button>
           </div>
-          {showform && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex justify-center items-center  p-3 rounded-xl"
-            >
-              
-             <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-              <div>
-                <div className="flex justify-end items-end">
-                <button
-                onClick={() => setShowForm(false)}
-                className="p-1 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
+          <AnimatePresence>
+            {showform && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="flex justify-center items-center  p-3 rounded-xl"
               >
-                <X size={20} className="text-gray-500" />
-              </button>
-              </div>
-              </div>
-               <div className="flex max-w-md flex-col gap-3 p-2">
-                <input
-                  type="text"
-                  placeholder="Company"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="w-full border rounded-lg px-3 py-2"
-                />
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                  <div>
+                    <div className="flex justify-end items-end">
+                      <button
+                        onClick={() => setShowForm(false)}
+                        className="p-1 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
+                      >
+                        <X size={20} className="text-gray-500" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex max-w-md flex-col gap-3 p-2">
+                    <input
+                      type="text"
+                      placeholder="Company"
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      className="w-full border rounded-lg px-3 py-2"
+                    />
 
-                <input
-                  type="text"
-                  placeholder="Role"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="w-full border rounded-lg px-3 py-2"
-                />
+                    <input
+                      type="text"
+                      placeholder="Role"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      className="w-full border rounded-lg px-3 py-2"
+                    />
 
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="pending">Pending</option>
-                  <option value="accepted">Accepted</option>
-                  <option value="rejected">Rejected</option>
-                </select>
-                {/* <p>{user.userName}</p> */}
-                <div className="flex flex-row gap-2 mt-4">
-                  <button className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer">
-                    save
-                  </button>
-                  <button className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer">
-                    cancel
-                  </button>
+                    <select
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      <option value="" disabled>
+                        Select status
+                      </option>
+                      <option value="pending">Pending</option>
+                      <option value="applied">Applied</option>
+                      <option value="interview">Interview</option>
+                      <option value="accepted">Accepted</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+
+                    <div className="flex justify-center items-center flex-row gap-2 mt-4">
+                      <button
+                        onClick={() => handleApplication(company, role, status)}
+                        className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
+                      >
+                        save
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-             </div>
-            </motion.div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
     </>
