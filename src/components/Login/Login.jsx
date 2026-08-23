@@ -13,12 +13,11 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setshowPassword] = useState(false);
   const navigate = useNavigate();
-  // const [isAdmin, setisAdmin] = useState(false);
   const [admin, setAdmin] = useState([]);
   const [user, setUser] = useState([]);
 
   const getAdminData = () => {
-    setAdmin(JSON.parse(localStorage.getItem("adminCred")));
+    setAdmin(JSON.parse(localStorage.getItem("adminCred")) || []);
   };
 
   const setAdminData = (isAdmin = false) => {
@@ -33,8 +32,10 @@ function Login() {
   };
 
   const getUserData = () => {
-    setUser(JSON.parse(localStorage.getItem("User")) || []);
-  };
+  setUser(JSON.parse(localStorage.getItem("User")) || []);
+};
+
+
   useEffect(() => {
     setAdminData();
     getUserData();
@@ -49,14 +50,22 @@ function Login() {
         setAdminData(true);
         setEmail("");
         setPassword("");
-        navigate("home");
-        console.log("admin logged in");
+          toast.success("Welcome Admin", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+        navigate('home')
       }
     });
 
-    if (found) {
-      return;
-    }
+    
 
     if (user.length === 0) {
       toast.error("User not found! create account first", {
@@ -79,8 +88,19 @@ function Login() {
         found = true;
         setEmail("");
         setPassword("");
-        console.log("matched");
-        navigate("home");
+        localStorage.setItem('loggedIn_User',JSON.stringify(u))
+         toast.success(`Welcome Back ${u.userName}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+        navigate('home')
       }
     });
     if (!found) {
@@ -96,24 +116,14 @@ function Login() {
         transition: Bounce,
       });
     }
-
+//  if (found) {
+//       return;
+//     }
     
   };
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
+    
       <div className="flex justify-center items-center w-full min-h-screen bg-[#F7F7F5] px-8">
         <div className="flex items-center justify-center gap-8 max-w-6xl">
           <div className="hidden md:block w-[55%]">
