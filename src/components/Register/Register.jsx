@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +21,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
   const [confirmShowPassword, setconfirmShowPassword] = useState(false);
+  const navigate = useNavigate()
   const [userCred, setUserCred] = useState(() => {
     return JSON.parse(localStorage.getItem("User")) || [];
   });
@@ -107,23 +109,13 @@ function Register() {
       theme: "dark",
       transition: Bounce,
     });
+
+    
+    navigate("/")
   };
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
-
+     
       <div className="flex justify-center items-center w-full min-h-screen bg-[#F7F7F5] px-8">
         <div className="flex items-center justify-center gap-8 max-w-6xl">
           <div className="hidden md:block w-[55%]">
