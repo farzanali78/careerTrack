@@ -13,6 +13,7 @@ function Home() {
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [status, setStatus] = useState("");
+  const [date,setDateApplied] = useState("")
   const [application, setApplication] = useState([]);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ function Home() {
   useEffect(() => {
     if (!user.userName) return;
     const storageKey = `applications_${user.userName}`;
-    const data = JSON.parse(localStorage.getItem(storageKey)) || [];
+    localStorage.setItem(storageKey,JSON.stringify(application))
   }, [application, user.userName]);
 
   const handleClick = () => {
@@ -48,12 +49,13 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const handleApplication = (Usercompany, Userrole, Jobstatus) => {
+  const handleApplication = (Usercompany, Userrole, Jobstatus, applyDate) => {
     const newApp = {
       id: Date.now(),
       company: Usercompany,
       role: Userrole,
       status: Jobstatus,
+      Date: applyDate
     };
 
     if (!Usercompany || !Userrole || !Jobstatus) {
@@ -73,14 +75,13 @@ function Home() {
 
     setCompany("");
     setRole("");
+    setDateApplied("")
     setStatus("pending");
     toast.success("Job added!");
     setApplication((prev) => [...prev, newApp]);
   };
 
-  useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(application));
-  }, [application, storageKey]);
+
 
   return (
     <>
@@ -172,9 +173,20 @@ function Home() {
                       className="w-full border rounded-lg px-3 py-2"
                     />
 
+                    
+                    <input
+                      type="date"
+                      placeholder="Date"
+                      value={date}
+                      onChange={(e) => setDateApplied(e.target.value)}
+                      className="w-full border rounded-lg px-3 py-2"
+                      
+                    />
+
                     <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
+                      
                     >
                       <option value="" disabled>
                         Select status
@@ -188,7 +200,7 @@ function Home() {
 
                     <div className="flex justify-center items-center flex-row gap-2 mt-4">
                       <button
-                        onClick={() => handleApplication(company, role, status)}
+                        onClick={() => handleApplication(company, role, status, date)}
                         className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
                       >
                         save
