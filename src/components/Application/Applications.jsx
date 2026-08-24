@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 
 function Application() {
   const [userApplications, setUserApplications] = useState([]);
-  const [updatedStatus,setUpdatedStatus] = useState("")
-  const [noJob,setNoJob] = useState(false)
+  // const [updatedStatus,setUpdatedStatus] = useState("")
   const currentUser = JSON.parse(localStorage.getItem("loggedIn_User")) || {};
   const storageKey = `applications_${currentUser.userName}`;
   const getApplicationData = () => {
@@ -18,19 +17,17 @@ function Application() {
     getApplicationData();
   }, []);
 
-//   useEffect(()=>{
-// if (userApplications.length===0){
-//  console.log("hi")
-// }
-//   },[])
+  useEffect(() => {
+  if (!currentUser.userName) return; // guard, same pattern as before
+  const storageKey = `applications_${currentUser.userName}`;
+  localStorage.setItem(storageKey, JSON.stringify(userApplications));
+}, [userApplications, currentUser.userName]);
+
 
 const newstatus = (id,newJobStatus) =>{
   setUserApplications((prev)=> 
     prev.map((app)=>
       app.id === id ? {...app,status:newJobStatus}:app))
-    
-  
-
 }
 
   const statusColors = {
