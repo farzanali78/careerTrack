@@ -45,7 +45,7 @@ function Login() {
   const handleUserData = (email, pass) => {
     let found = false;
     admin.map((a) => {
-      if (a.adminEmail == email && a.adminPassword == pass) {
+      if (a.adminEmail === email && a.adminPassword === pass) {
         found = true;
         setAdminData(true);
         setEmail("");
@@ -84,7 +84,7 @@ function Login() {
       return;
     }
     user.map((u) => {
-      if (u.Email == email && u.pass == pass) {
+      if (u.Email === email && u.pass === pass) {
         found = true;
         setEmail("");
         setPassword("");
