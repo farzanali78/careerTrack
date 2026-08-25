@@ -89,7 +89,7 @@ function Login() {
         setEmail("");
         setPassword("");
         localStorage.setItem('loggedIn_User',JSON.stringify(u))
-         toast.success(`Welcome Back ${u.userName}`, {
+         toast.success(`Welcome ${u.userName}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
