@@ -19,6 +19,7 @@ function Home() {
   useEffect(() => {
     const admin = JSON.parse(localStorage.getItem("adminCred"));
     setisAdmin(admin[0].isAdmin);
+    // console.log(admin[0].isAdmin)
   }, []);
 
   useEffect(() => {
