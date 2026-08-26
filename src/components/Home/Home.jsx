@@ -13,19 +13,20 @@ function Home() {
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [status, setStatus] = useState("");
-  const [date,setDateApplied] = useState("")
+  const [date, setDateApplied] = useState("");
   const [application, setApplication] = useState([]);
-
+  const allUsers = JSON.parse(localStorage.getItem("User")) || [];
   useEffect(() => {
     const admin = JSON.parse(localStorage.getItem("adminCred"));
     setisAdmin(admin[0].isAdmin);
-    // console.log(admin[0].isAdmin)
   }, []);
 
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("loggedIn_User")) || {};
     setUser(savedUser);
   }, []);
+
+ 
 
   useEffect(() => {
     if (!user.userName) return;
@@ -37,12 +38,14 @@ function Home() {
   useEffect(() => {
     if (!user.userName) return;
     const storageKey = `applications_${user.userName}`;
-    localStorage.setItem(storageKey,JSON.stringify(application))
+    localStorage.setItem(storageKey, JSON.stringify(application));
   }, [application, user.userName]);
+
+
 
   const handleClick = () => {
     if (isAdmin) {
-      setShowUser(true);
+      navigate ("/showUsers")
     } else {
       setShowForm(true);
     }
@@ -56,7 +59,7 @@ function Home() {
       company: Usercompany,
       role: Userrole,
       status: Jobstatus,
-      Date: applyDate
+      Date: applyDate,
     };
 
     if (!Usercompany || !Userrole || !Jobstatus) {
@@ -76,13 +79,11 @@ function Home() {
 
     setCompany("");
     setRole("");
-    setDateApplied("")
+    setDateApplied("");
     setStatus("pending");
     toast.success("Job added!");
     setApplication((prev) => [...prev, newApp]);
   };
-
-
 
   return (
     <>
@@ -174,20 +175,17 @@ function Home() {
                       className="w-full border rounded-lg px-3 py-2"
                     />
 
-                    
                     <input
                       type="date"
                       placeholder="Date"
                       value={date}
                       onChange={(e) => setDateApplied(e.target.value)}
                       className="w-full border rounded-lg px-3 py-2"
-                      
                     />
 
                     <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
-                      
                     >
                       <option value="" disabled>
                         Select status
@@ -201,7 +199,9 @@ function Home() {
 
                     <div className="flex justify-center items-center flex-row gap-2 mt-4">
                       <button
-                        onClick={() => handleApplication(company, role, status, date)}
+                        onClick={() =>
+                          handleApplication(company, role, status, date)
+                        }
                         className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
                       >
                         save
@@ -211,6 +211,7 @@ function Home() {
                 </div>
               </motion.div>
             )}
+           
           </AnimatePresence>
         </div>
       </section>
