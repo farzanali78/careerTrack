@@ -9,7 +9,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setshowPassword] = useState(false);
   const navigate = useNavigate();
@@ -23,8 +23,9 @@ function Login() {
   const setAdminData = (isAdmin = false) => {
     const admin = [
       {
-        adminEmail: "admin",
+        adminName: "admin",
         adminPassword: "admin1234",
+        adminEmail: "admin123@gmail.com",
         isAdmin: isAdmin,
       },
     ];
@@ -42,13 +43,13 @@ function Login() {
     getAdminData();
   }, []);
 
-  const handleUserData = (email, pass) => {
+  const handleUserData = (userName, pass) => {
     let found = false;
     admin.map((a) => {
-      if (a.adminEmail === email && a.adminPassword === pass) {
+      if (a.adminName === userName && a.adminPassword === pass) {
         found = true;
         setAdminData(true);
-        setEmail("");
+        setUserName("");
         setPassword("");
           toast.success("Welcome Admin", {
         position: "top-right",
@@ -79,14 +80,14 @@ function Login() {
         theme: "dark",
         transition: Bounce,
       });
-      setEmail("");
+      setUserName("");
       setPassword("");
       return;
     }
     user.map((u) => {
-      if (u.Email === email && u.pass === pass) {
+      if (u.userName === userName && u.pass === pass) {
         found = true;
-        setEmail("");
+        setUserName("");
         setPassword("");
         localStorage.setItem('loggedIn_User',JSON.stringify(u))
          toast.success(`Welcome ${u.userName}`, {
@@ -149,8 +150,8 @@ function Login() {
                 />
                 <input
                   type="text"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
+                  onChange={(e) => setAdminName(e.target.value)}
+                  value={adminName}
                   placeholder="Email"
                   className="w-full py-2 bg-transparent text-white outline-none placeholder:text-gray-300"
                 />
@@ -181,7 +182,7 @@ function Login() {
               <div className="mt-4 flex items-center justify-center">
                 <button
                   className="text-white border-2 cursor-pointer px-3 py-2 hover:bg-white hover:text-cyan-500 duration-75 ease-out border-cyan-500 rounded-xl font-semibold"
-                  onClick={() => handleUserData(email, password)}
+                  onClick={() => handleUserData(adminName, password)}
                 >
                   Login
                 </button>
