@@ -10,6 +10,7 @@ import {
   LockPasswordIcon,
   UserIcon,
   Contact02Icon,
+  Email,
 } from "@hugeicons/core-free-icons";
 import registerImg from "../../assets/registerImg.jpeg";
 
@@ -36,6 +37,10 @@ function Register() {
     confirmPass,
     contactNum,
   ) => {
+    
+   
+  
+
     if (!email || !userName || !userPass || !confirmPass || !contactNum) {
       toast.error("Fill all fields!", {
         position: "top-right",
@@ -81,6 +86,24 @@ function Register() {
       setUserName("");
       return;
     }
+
+    if (userCred.some((u) => u.userName === userName)){
+    toast.error("Username already exists");
+    setUserName("")
+    return
+   }
+   
+   else if (userCred.some((u) => u.userContactNum === contactNum)){
+   toast.error("Contact number already exists")
+    setContactNum("")
+    return
+   }
+   
+   else if (userCred.some((u) => u.Email === email)){
+    toast.error("Email already exists")
+    setEmail("")
+    return
+   }
 
     const newUser = {
       id: Date.now(),
