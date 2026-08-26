@@ -52,6 +52,7 @@ const navigate = useNavigate()
    
     const changePassword = () =>{
       const currentUser = JSON.parse(localStorage.getItem("loggedIn_User")) || {};
+      const admin = JSON.parse(localStorage.getItem("adminCred")) || [];
       if (currentPassword === currentUser.pass){
         const updateUser = {...currentUser,pass: newPassword}
         localStorage.setItem("loggedIn_User" , JSON.stringify(updateUser))
@@ -62,6 +63,16 @@ const navigate = useNavigate()
         toast.success("Password updated successfully!");
         setCurrentPassword("");
         setNewPassword("");
+        navigate("/")
+      }
+
+      else if ( currentPassword === admin[0]?.adminPassword){
+        const updateAdmin = {...admin[0],adminPassword: newPassword}
+        localStorage.setItem("adminCred" , JSON.stringify(updateAdmin))
+        toast.success("Password Changed successfully")
+        setCurrentPassword("");
+        setNewPassword("");
+        navigate("/")
       }
       
       else{
