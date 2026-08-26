@@ -150,9 +150,9 @@ function Login() {
                 />
                 <input
                   type="text"
-                  onChange={(e) => setAdminName(e.target.value)}
-                  value={adminName}
-                  placeholder="Email"
+                  onChange={(e) => setUserName(e.target.value)}
+                  value={userName}
+                  placeholder="Username"
                   className="w-full py-2 bg-transparent text-white outline-none placeholder:text-gray-300"
                 />
               </div>
@@ -182,7 +182,7 @@ function Login() {
               <div className="mt-4 flex items-center justify-center">
                 <button
                   className="text-white border-2 cursor-pointer px-3 py-2 hover:bg-white hover:text-cyan-500 duration-75 ease-out border-cyan-500 rounded-xl font-semibold"
-                  onClick={() => handleUserData(adminName, password)}
+                  onClick={() => handleUserData(userName, password)}
                 >
                   Login
                 </button>
