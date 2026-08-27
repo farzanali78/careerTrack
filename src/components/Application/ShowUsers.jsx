@@ -19,22 +19,24 @@
 
 
     return (
-        <div className="max-w-4xl min-h-screen mx-auto p-6">
+       <>
+       <div className="bg-[#F7F7F5]">
+         <div className="max-w-4xl  min-h-screen mx-auto p-6">
         <h1 className="text-2xl font-bold text-[#1B3A6B] mb-6">Manage Users</h1>
-
+        <h1 className="text-2xl font-bold text-[#1B3A6B] mb-6">Total Users: {allUsers.length}</h1>
         
 
         {allUsers.length === 0 ? (
             <p className="text-center text-gray-500 mt-6">
             No users registered yet.
             </p>) :(
-                <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <table className="w-full text-center border-collapse">
+                <div className="bg-white  rounded-xl shadow-md overflow-hidden">
+            <table className="w-full   text-center ">
             <thead>
-                <tr className="bg-[#1B3A6B]  text-white">
+                <tr className="bg-[#1B3A6B] text-center text-white">
                 <th className="px-4 py-3 text-sm font-semibold">Username</th>
-                <th className="px-4 py-3 text-sm font-semibold">Email</th>
-                <th className="px-4 py-3 text-sm font-semibold text-right">
+                <th className="px-4 py-3  text-sm font-semibold">Email</th>
+                <th className="px-6 py-3  text-sm font-semibold ">
                     Actions
                 </th>
                 </tr>
@@ -51,10 +53,10 @@
                     {u.userName}
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-600">{u.Email}</td>
-                    <td className="px-4 py-3 text-right">
+                    <td className="px-3 py-3 ">
                     <button
                         onClick={() => handleDeleteUser(u.userName)}
-                        className="text-red-600 cursor-pointer hover:text-red-700 text-sm font-semibold px-3 py-1 rounded-full hover:bg-red-50 transition-colors"
+                        className="text-red-600  cursor-pointer hover:text-red-700 text-sm font-semibold px-3 py-1 rounded-full hover:bg-red-50 transition-colors"
                     >
                         Delete
                     </button>
@@ -66,6 +68,8 @@
         </div>
         )}
         </div>
+       </div>
+       </>
     );
     }
 
