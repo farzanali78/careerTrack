@@ -1,5 +1,7 @@
     import React, { useEffect, useState } from "react";
     import { toast } from "react-toastify";
+    import { motion } from "motion/react";
+    import { AnimatePresence } from "motion/react";
 
     function ShowUsers() {
     const [allUsers, setAllUsers] = useState([]);
@@ -20,7 +22,13 @@
 
     return (
        <>
-       <div className="bg-[#F7F7F5]">
+     <AnimatePresence>
+          <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, x: -100 }}
+        transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
+          className="bg-[#F7F7F5]">
          <div className="max-w-4xl  min-h-screen mx-auto p-6">
         <h1 className="text-2xl font-bold text-[#1B3A6B] mb-6">Manage Users</h1>
         <h1 className="text-2xl font-bold text-[#1B3A6B] mb-6">Total Users: {allUsers.length}</h1>
@@ -68,7 +76,8 @@
         </div>
         )}
         </div>
-       </div>
+       </motion.div>
+     </AnimatePresence>
        </>
     );
     }
