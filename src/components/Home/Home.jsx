@@ -50,6 +50,7 @@ function Home() {
       setShowForm(true);
     }
   };
+  
 
   const navigate = useNavigate();
 
@@ -123,7 +124,13 @@ function Home() {
             />
           </div>
 
-          <div className="flex gap-2">
+         <AnimatePresence>
+           <motion.div  
+           initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, x: -100 }}
+        transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
+           className="flex gap-2">
             <button
               onClick={handleClick}
               className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
@@ -131,13 +138,16 @@ function Home() {
               {isAdmin ? "View All Users" : "+ Add Job"}
             </button>
 
-            <button
+            {
+              isAdmin ? "" : <button
               onClick={() => navigate("/application")}
               className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
             >
-              {isAdmin ? "Manage Users" : "View My Jobs"}
+            My Jobs
             </button>
-          </div>
+            }
+          </motion.div>
+         </AnimatePresence>
           <AnimatePresence>
             {showform && (
               <motion.div
