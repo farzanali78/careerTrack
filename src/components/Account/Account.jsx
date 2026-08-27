@@ -1,7 +1,9 @@
+import { AnimatePresence } from 'motion/react';
 import { div, tr } from 'motion/react-client';
 import { useState, useEffect  } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
+import { motion } from 'framer-motion';
 import "react-toastify/dist/ReactToastify.css";
 function Account() {
 const [username,setUsername] = useState("")
@@ -27,8 +29,6 @@ const navigate = useNavigate()
         setUserEmail(loggedInUser.Email || "")
       }
     }, []);
-
-
 
     const logOut = ()=>{
       localStorage.removeItem("loggedIn_User");
@@ -66,14 +66,6 @@ const navigate = useNavigate()
         navigate("/")
       }
 
-      else if ( currentPassword === admin[0]?.adminPassword){
-        const updateAdmin = {...admin[0],adminPassword: newPassword}
-        localStorage.setItem("adminCred" , JSON.stringify(updateAdmin))
-        toast.success("Password Changed successfully")
-        setCurrentPassword("");
-        setNewPassword("");
-        navigate("/")
-      }
       
       else{
         toast.error("Incorrect current password");
@@ -84,16 +76,25 @@ const navigate = useNavigate()
 
   return (
   <>
-  <div className='bg-[#F7F7F5]'>
-      <div className="max-w-2xl  mx-auto p-6">
+  <AnimatePresence>
+    <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, x: -100 }}
+        transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
+    className='bg-[#F7F7F5]'>
+      <div className="max-w-2xl min-h-screen mx-auto p-6">
   <h1 className="text-2xl font-bold text-[#1B3A6B] mb-6">My Account</h1>
 
  
-  <div className="bg-[#F7F7F5] rounded-xl shadow-md p-6 mb-4">
+  <div className="bg-[#F7F7F5] rounded-xl  shadow-md p-6 mb-4">
     <h2 className="font-semibold text-lg mb-4">Profile</h2>
     <input value={username} readOnly className="w-full border rounded-lg px-3 py-2 mb-3" />
     <input value={userEmail} readOnly className="w-full border rounded-lg px-3 py-2 mb-3" />
-     <button onClick={()=>setChangePasswordBtn(true)} className='cursor-pointer text-gray-600 text-sm'>Change Password</button>
+    
+     {
+      isAdmin ? "" :<button onClick={()=>setChangePasswordBtn(true)} className='cursor-pointer text-gray-600 text-sm'>Change Password</button>
+     }
      {
       changePasswordBtn && (
         <div>
@@ -113,12 +114,16 @@ const navigate = useNavigate()
   </button>
 
   
-  <div className="border border-red-200 bg-red-50 rounded-xl p-4">
+  {
+    isAdmin ? "" :
+    <div className="border border-red-200 bg-red-50 rounded-xl p-4">
     <p className="text-sm text-red-700 mb-2">Deleting your account removes all your tracked applications permanently.</p>
     <button onClick={deleteUserAccount} className="text-red-600 cursor-pointer font-semibold text-sm">Delete Account</button>
   </div>
+   }
 </div>
-  </div>
+  </motion.div>
+  </AnimatePresence>
   </>
   )
 }
