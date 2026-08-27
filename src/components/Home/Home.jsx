@@ -109,7 +109,7 @@ function Home() {
               options={{
                 strings: isAdmin
                   ? [
-                      "Monitor applicants, manage interviews and keep careerTrack running smoothly.",
+                      "Review registered users and keep the platform running smoothly.",
                     ]
                   : [
                       "Log every application, track its status, and see your job search progress at a glance.",
