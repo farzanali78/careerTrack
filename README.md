@@ -17,6 +17,7 @@ When applying to a large number of jobs, it can become difficult to remember whe
 - View account information
 - Change account password
 - Permanently delete account
+- Toast notifications for user actions and feedback
 - Application data persistence using `localStorage`
 - Responsive user interface
 - Interactive UI animations and transitions
@@ -98,9 +99,10 @@ These credentials are intended for the current learning-project implementation.
 
 ### Libraries
 
-* **Lucide** — Icons used throughout the interface
-* **Hugeicons** — Additional iconography
-* **Motion** — UI animations and transitions
+- **Lucide** — Icons used throughout the interface
+- **Hugeicons** — Additional iconography
+- **Motion** — UI animations and transitions
+- **React Toastify** — Toast notifications for user feedback
 
 ### Data Storage
 
@@ -112,20 +114,21 @@ No backend or external database is currently used.
 
 This project was built as a frontend-focused learning project and demonstrates several important React concepts, including:
 
-* React components
-* Props and state management
-* Conditional rendering
-* Form handling
-* Event handling
-* Array methods
-* CRUD operations
-* Client-side authentication logic
-* Role-based UI rendering
-* `localStorage`
-* Responsive design
-* Tailwind CSS utility classes
-* UI animations
-* Icon libraries
+- React components
+- Props and state management
+- Conditional rendering
+- Form handling
+- Event handling
+- Array methods
+- CRUD operations
+- Client-side authentication logic
+- Role-based UI rendering
+- `localStorage`
+- Toast notifications
+- Responsive design
+- Tailwind CSS utility classes
+- UI animations
+- Icon libraries
 
 ## CRUD Functionality
 
