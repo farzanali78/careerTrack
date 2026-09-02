@@ -1,6 +1,13 @@
 import React from "react";
+import { useEffect,useState } from "react";
 import { NavLink } from "react-router-dom";
 function Footer() {
+    const [admin, setAdmin] = useState([]);
+    useEffect(() => {
+      const adminData = JSON.parse(localStorage.getItem("adminCred")) || [];
+      setAdmin(adminData);
+    }, []);
+
  return(
    <div className="bg-[#1B3A6B] flex flex-col md:grid md:grid-cols-3 md:items-center gap-4 px-6 md:px-12 py-6 w-full">
       
@@ -25,7 +32,7 @@ function Footer() {
                     `px-4 py-2 rounded-xl font-semibold ${
       isActive ? "bg-[#1B3A6B] text-[#F5A623]" : "text-white"}`
                   }>
-              My Applications
+             {admin[0]?.isAdmin ? "Manage Users" : "My Jobs"}
             </NavLink>
           </li>
         </ul>
