@@ -183,14 +183,14 @@ function Home() {
                       className="w-full border rounded-lg px-3 py-2"
                     />
  
-                    <div>
-                      <label className="text-sm text-gray-600 mb-1 block">Date Applied</label>
+                    <div className="flex items-center gap-3 border rounded-lg px-3 py-2">
+                      <label className="text-sm font-medium text-gray-500 whitespace-nowrap">Date Applied</label>
                       <input
                       type="date"
                       placeholder="Date"
                       value={date}
                       onChange={(e) => setDateApplied(e.target.value)}
-                      className="w-full border rounded-lg px-3 py-2"
+                      className="flex-1 outline-none text-sm"
                     />
                     </div>
 
