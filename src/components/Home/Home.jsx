@@ -76,7 +76,7 @@ function Home() {
     setCompany("");
     setRole("");
     setDateApplied("");
-    setStatus("Select a status");
+    setStatus("");
     toast.success("Job added!");
     setApplication((prev) => [...prev, newApp]);
   };
