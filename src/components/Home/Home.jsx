@@ -184,7 +184,7 @@ function Home() {
                     />
  
                     <div className="flex items-center gap-3 border rounded-lg px-3 py-2">
-                      <label className="text-sm font-medium text-gray-500 whitespace-nowrap">Date Applied</label>
+                      <label className="text-sm md:hidden font-medium text-gray-500 whitespace-nowrap">Date Applied</label>
                       <input
                       type="date"
                       placeholder="Date"
@@ -194,7 +194,7 @@ function Home() {
                     />
                     </div>
 
-                    <div>
+                    <div className="relative w-full">
                       <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
