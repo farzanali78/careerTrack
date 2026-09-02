@@ -51,7 +51,7 @@ function Header() {
                     `px-4 py-2 rounded-xl font-semibold ${isActive ? "bg-[#1B3A6B] text-white" : "text-black"}`
                   }
                 >
-                  {admin[0]?.isAdmin ? "Manage Users" : "My Applications"}
+                  {admin[0]?.isAdmin ? "Manage Users" : "My Jobs"}
                 </NavLink>
               </li>
             </ul>
