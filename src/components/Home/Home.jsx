@@ -182,16 +182,20 @@ function Home() {
                       onChange={(e) => setRole(e.target.value)}
                       className="w-full border rounded-lg px-3 py-2"
                     />
-
-                    <input
+ 
+                    <div>
+                      <label className="text-sm text-gray-600 mb-1 block">Date Applied</label>
+                      <input
                       type="date"
                       placeholder="Date"
                       value={date}
                       onChange={(e) => setDateApplied(e.target.value)}
                       className="w-full border rounded-lg px-3 py-2"
                     />
+                    </div>
 
-                    <select
+                    <div>
+                      <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
                       className="w-full border rounded-lg px-3 py-2 appearance-none bg-white pr-10"
@@ -209,6 +213,7 @@ function Home() {
                       size={18}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
                     />
+                    </div>
 
                     <div className="flex justify-center items-center flex-row gap-2 mt-4">
                       <button
