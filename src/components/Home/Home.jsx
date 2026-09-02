@@ -4,7 +4,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { X } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
 
 function Home() {
   const [isAdmin, setisAdmin] = useState(false);
