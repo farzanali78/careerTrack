@@ -26,8 +26,6 @@ function Home() {
     setUser(savedUser);
   }, []);
 
- 
-
   useEffect(() => {
     if (!user.userName) return;
     const storageKey = `applications_${user.userName}`;
@@ -41,16 +39,13 @@ function Home() {
     localStorage.setItem(storageKey, JSON.stringify(application));
   }, [application, user.userName]);
 
-
-
   const handleClick = () => {
     if (isAdmin) {
-      navigate ("/showUsers")
+      navigate("/showUsers");
     } else {
       setShowForm(true);
     }
   };
-  
 
   const navigate = useNavigate();
 
@@ -124,30 +119,33 @@ function Home() {
             />
           </div>
 
-         <AnimatePresence>
-           <motion.div  
-           initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, x: -100 }}
-        transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
-           className="flex gap-2">
-            <button
-              onClick={handleClick}
-              className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
+          <AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
+              className="flex gap-2"
             >
-              {isAdmin ? "View All Users" : "+ Add Job"}
-            </button>
+              <button
+                onClick={handleClick}
+                className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
+              >
+                {isAdmin ? "View All Users" : "+ Add Job"}
+              </button>
 
-            {
-              isAdmin ? "" : <button
-              onClick={() => navigate("/application")}
-              className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
-            >
-            My Jobs
-            </button>
-            }
-          </motion.div>
-         </AnimatePresence>
+              {isAdmin ? (
+                ""
+              ) : (
+                <button
+                  onClick={() => navigate("/application")}
+                  className="bg-[#F5A623] text-[#1B3A6B] font-semibold px-8 py-3 rounded-full hover:bg-[#e09615] transition cursor-pointer"
+                >
+                  My Jobs
+                </button>
+              )}
+            </motion.div>
+          </AnimatePresence>
           <AnimatePresence>
             {showform && (
               <motion.div
@@ -196,6 +194,7 @@ function Home() {
                     <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
+                      className="w-full border rounded-lg px-3 py-2 appearance-none bg-white pr-10"
                     >
                       <option value="" disabled>
                         Select status
@@ -206,6 +205,10 @@ function Home() {
                       <option value="accepted">Accepted</option>
                       <option value="rejected">Rejected</option>
                     </select>
+                    <ChevronDown
+                      size={18}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                    />
 
                     <div className="flex justify-center items-center flex-row gap-2 mt-4">
                       <button
@@ -221,7 +224,6 @@ function Home() {
                 </div>
               </motion.div>
             )}
-           
           </AnimatePresence>
         </div>
       </section>
